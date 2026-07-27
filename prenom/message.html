@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Message</title>
+
+<style>
+
+body{
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial,sans-serif;
+    background:transparent;
+}
+
+#message{
+    font-size:42px;
+    font-weight:bold;
+    text-align:center;
+    color:#000;
+}
+
+.nom{
+    color:#0057B8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="message"></div>
+
+<script>
+
+const prenom = localStorage.getItem("prenomApprenant");
+
+if(prenom){
+
+    document.getElementById("message").innerHTML =
+    "Bienvenue dans cette mission <span class='nom'>"+prenom.toUpperCase()+"</span>";
+
+}else{
+
+    document.getElementById("message").innerHTML =
+    "Bienvenue dans cette mission";
+
+}
+
+</script>
+
+</body>
+</html>
