@@ -82,31 +82,33 @@
     <div id="confirmation" aria-live="polite"></div>
   </div>
 
-  <script>
-    const champPrenom = document.getElementById("prenom");
-    const boutonValider = document.getElementById("valider");
-    const confirmation = document.getElementById("confirmation");
+<script src="../js/gt-core.js"></script>
 
-    function enregistrerPrenom() {
-      const prenom = champPrenom.value.trim();
+<script>
+  const champPrenom = document.getElementById("prenom");
+  const boutonValider = document.getElementById("valider");
+  const confirmation = document.getElementById("confirmation");
 
-      if (!prenom) {
-        confirmation.textContent = "Merci de saisir votre prénom.";
-        return;
-      }
+  function enregistrerPrenom() {
+    const prenom = champPrenom.value.trim();
 
-      localStorage.setItem("prenomApprenant", prenom);
-      confirmation.textContent = "Prénom enregistré : " + prenom;
+    if (!prenom) {
+      confirmation.textContent = "Merci de saisir votre prénom.";
+      return;
     }
 
-    boutonValider.addEventListener("click", enregistrerPrenom);
+    GT.set("prenom", prenom.trim());
+    confirmation.textContent = "Prénom enregistré : " + GT.get("prenom");
+  }
 
-    champPrenom.addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        enregistrerPrenom();
-      }
-    });
-  </script>
+  boutonValider.addEventListener("click", enregistrerPrenom);
+
+  champPrenom.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      enregistrerPrenom();
+    }
+  });
+</script>
 
 </body>
 </html>
