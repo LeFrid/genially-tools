@@ -37,10 +37,12 @@ body{
 <body>
 
 <div id="message"></div>
-
+    
+<script src="../js/gt-core.js"></script>
+    
 <script>
 
-const prenom = localStorage.getItem("prenomApprenant");
+const prenom = GT.get("prenom");
 
 if(prenom){
 
