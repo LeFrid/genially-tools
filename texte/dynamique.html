@@ -3,52 +3,83 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GT Dynamic Text</title>
+    <title>GT - Texte dynamique</title>
 
-<style>
+    <script src="../js/gt-core.js"></script>
 
-body{
-    margin:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    width:100vw;
-    height:100vh;
-    overflow:hidden;
-    background:transparent;
-    font-family:Arial,sans-serif;
-}
+    <style>
 
-#texte{
-    text-align:center;
-    font-size:42px;
-    font-weight:bold;
-    color:#000;
-}
+        html,
+        body{
+            --gt-variable-color:#0057B8;
+            margin:0;
+            padding:0;
+            width:100%;
+            height:100%;
 
-.variable{
-    color:#0057B8;
-}
+            display:flex;
+            justify-content:center;
+            align-items:center;
 
-</style>
+            overflow:hidden;
+
+            font-family:Arial, sans-serif;
+            background:transparent;
+
+        }
+
+        #texte{
+
+                text-align:center;
+                line-height:1.3;
+                white-space:pre-wrap;
+                font-size:42px;
+        }
+
+       .variable{
+
+            font-weight:bold;
+            color:var(--gt-variable-color);
+
+        }
+
+    </style>
 
 </head>
 
 <body>
 
-<div id="texte"></div>
-
-<script src="../js/gt-core.js"></script>
-
+    <div id="texte" data-gt-render></div>
+    
 <script>
+    
+    const {
+    text = "Bienvenue dans cette mission {prenom}",
+    size = "42",
+    color = "000000",
+    font = "Arial",
+    variableColor = "0057B8"
+    } = GT.params();
 
-// Le moteur sera construit à l'étape suivante.
+    const zoneTexte = document.getElementById("texte");
+
+    zoneTexte.innerHTML = text;
+    zoneTexte.style.fontSize = size + "px";
+    zoneTexte.style.color = "#" + color;
+    zoneTexte.style.fontFamily = font;
+
+    document.documentElement.style.setProperty(
+    "--gt-variable-color",
+    "#" + variableColor
+);
+
+    GT.autoRender();
 
 </script>
-
+    
 </body>
 
 </html>
