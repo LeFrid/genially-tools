@@ -55,26 +55,60 @@
     <div id="texte" data-gt-render></div>
     
 <script>
-    
+
     const {
-    text = "Bienvenue dans cette mission {prenom}",
-    size = "42",
-    color = "000000",
-    font = "Arial",
-    variableColor = "0057B8"
+        text = "Bienvenue dans cette mission {prenom}",
+        fontsize = "42",
+        color = "#000000",
+        font = "Arial",
+        fontweight = "400",
+        align = "center",
+        vcolor = "#0057B8"
     } = GT.params();
 
     const zoneTexte = document.getElementById("texte");
 
+    function normaliserCouleur(value, fallback) {
+
+        if (!value) {
+            return fallback;
+        }
+
+        const couleur = value.trim();
+
+        if (
+            /^[0-9a-fA-F]{3}$/.test(couleur) ||
+            /^[0-9a-fA-F]{6}$/.test(couleur) ||
+            /^[0-9a-fA-F]{8}$/.test(couleur)
+        ) {
+            return "#" + couleur;
+        }
+
+        return couleur;
+    }
+
+    function normaliserTaille(value) {
+
+        const taille = String(value).trim();
+
+        if (/^\d+(\.\d+)?$/.test(taille)) {
+            return taille + "px";
+        }
+
+        return taille;
+    }
+
     zoneTexte.innerHTML = text;
-    zoneTexte.style.fontSize = size + "px";
-    zoneTexte.style.color = "#" + color;
+    zoneTexte.style.fontSize = normaliserTaille(fontsize);
+    zoneTexte.style.color = normaliserCouleur(color, "#000000");
     zoneTexte.style.fontFamily = font;
+    zoneTexte.style.fontWeight = fontweight;
+    zoneTexte.style.textAlign = align;
 
     document.documentElement.style.setProperty(
-    "--gt-variable-color",
-    "#" + variableColor
-);
+        "--gt-variable-color",
+        normaliserCouleur(vcolor, "#0057B8")
+    );
 
     GT.autoRender();
 
