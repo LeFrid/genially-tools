@@ -1,7 +1,7 @@
 /*
 =====================================================
 Genially Tools Core (GT Core)
-Version : 1.2.0
+Version : 1.3.0
 Auteur : LeFrid
 =====================================================
 */
@@ -104,6 +104,30 @@ params() {
                 );
             }
         );
+
+    },
+
+    /**
+     * Met à jour automatiquement les éléments portant
+     * l'attribut data-gt-render
+     */
+    autoRender(selector = "[data-gt-render]", options = {}) {
+
+        const elements = document.querySelectorAll(selector);
+
+        elements.forEach(element => {
+
+            // Mémorise le modèle d'origine
+            if (!element.dataset.gtTemplate) {
+                element.dataset.gtTemplate = element.innerHTML;
+            }
+
+            element.innerHTML = this.render(
+                element.dataset.gtTemplate,
+                options
+            );
+
+        });
 
     }
 
