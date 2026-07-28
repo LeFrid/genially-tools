@@ -41,21 +41,35 @@ body{
 <script src="../js/gt-core.js"></script>
     
 <script>
+    
+  const zoneMessage = document.getElementById("message");
 
-const prenom = GT.get("prenom");
+  function afficherPrenom() {
+    const prenom = GT.get("prenom");
 
-if(prenom){
+    if (prenom) {
+      zoneMessage.innerHTML =
+        "Bienvenue dans cette mission <span class='nom'>" +
+        prenom.toUpperCase() +
+        "</span>";
+    } else {
+      zoneMessage.textContent = "Bienvenue dans cette mission";
+    }
+  }
 
-    document.getElementById("message").innerHTML =
-    "Bienvenue dans cette mission <span class='nom'>"+prenom.toUpperCase()+"</span>";
+  // Affichage au chargement
+  afficherPrenom();
 
-}else{
+  // Mise à jour lorsque la variable change
+  window.addEventListener("storage", function(event) {
+    if (event.key === "GT_prenom") {
+      afficherPrenom();
+    }
+  });
 
-    document.getElementById("message").innerHTML =
-    "Bienvenue dans cette mission";
-
-}
-
+  // Sécurité pour le fonctionnement dans les iframes Genially
+  setInterval(afficherPrenom, 500);
+    
 </script>
 
 </body>
