@@ -1,7 +1,7 @@
 /*
 =====================================================
 Genially Tools Core (GT Core)
-Version : 1.1.0
+Version : 1.2.0
 Auteur : LeFrid
 =====================================================
 */
@@ -45,17 +45,66 @@ remove(name) {
  */
 params() {
 
-    const params = {};
-    const urlParams = new URLSearchParams(window.location.search);
+        const params = {};
+        const urlParams = new URLSearchParams(window.location.search);
 
-    for (const [key, value] of urlParams.entries()) {
-        params[key] = value;
+        for (const [key, value] of urlParams.entries()) {
+            params[key] = value;
+        }
+
+        return params;
+
+    },
+
+    /**
+     * Remplace les variables {nom} par leur valeur enregistrée
+     */
+    render(template, options = {}) {
+
+        if (typeof template !== "string") {
+            return "";
+        }
+
+        const variableClass = options.variableClass || "variable";
+        const uppercase = options.uppercase === true;
+        const missingValue = options.missingValue || "";
+
+        /**
+         * Sécurise le texte avant son insertion dans le HTML
+         */
+        function escapeHtml(value) {
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        return template.replace(
+            /\{([a-zA-Z0-9_-]+)\}/g,
+            (placeholder, variableName) => {
+
+                let value = this.get(variableName);
+
+                if (value === null || value === undefined) {
+                    value = missingValue;
+                }
+
+                if (uppercase) {
+                    value = String(value).toUpperCase();
+                }
+
+                return (
+                    '<span class="' +
+                    escapeHtml(variableClass) +
+                    '">' +
+                    escapeHtml(value) +
+                    "</span>"
+                );
+            }
+        );
+
     }
 
-    return params;
-
-}
-
 };
-
-console.log("GT Core chargé");
