@@ -1,7 +1,7 @@
 /*
 =====================================================
 Genially Tools Core (GT Core)
-Version : 1.0.0
+Version : 1.1.0
 Auteur : LeFrid
 =====================================================
 */
@@ -36,24 +36,25 @@ const GT = {
     /**
      * Supprime une variable
      */
-    remove(name) {
-        localStorage.removeItem(this.prefix + name);
-    },
+remove(name) {
+    localStorage.removeItem(this.prefix + name);
+},
 
-    /**
-     * Efface toutes les variables GT
-     */
-    clear() {
+/**
+ * Lit les paramètres de l'URL
+ */
+params() {
 
-        Object.keys(localStorage).forEach(key => {
+    const params = {};
+    const urlParams = new URLSearchParams(window.location.search);
 
-            if (key.startsWith(this.prefix)) {
-                localStorage.removeItem(key);
-            }
-
-        });
-
+    for (const [key, value] of urlParams.entries()) {
+        params[key] = value;
     }
+
+    return params;
+
+}
 
 };
 
